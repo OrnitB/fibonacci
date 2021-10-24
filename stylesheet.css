@@ -1,0 +1,17 @@
+html,
+body {
+  font-family: "Open Sans", sans-serif;
+  margin: 50px 100px 0 100px;
+}
+
+#main {
+  display: flex;
+  align-items: center;
+  margin-bottom: 1%;
+}
+
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
