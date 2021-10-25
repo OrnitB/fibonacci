@@ -21,8 +21,6 @@ function fiboRecursion(x) {
   }
 } */
 
-let error42 = document.getElementById("error42");
-error42.style.display = "none";
 let largerThan50 = document.getElementById("largerThan50");
 largerThan50.style.display = "none";
 let loading = document.getElementById("loading");
@@ -33,30 +31,36 @@ let resultOutput = document.getElementById("resultOutput");
 button.addEventListener("click", callFiboServer);
 let number = parseInt(inputNumber.value);
 
-if (number > 50) {
-  largerThan50.style.display = "block";
-  loading.style.display = "none";
-  inputNumber.style.borderColor = "#D9534F";
-  inputNumber.style.color = "#D9534F";
-  button.disabled = true;
-}
-
 function callFiboServer() {
   let number = parseInt(inputNumber.value);
   let serverURL = `http://localhost:5050/fibonacci/${number}`;
   loading.style.display = "block";
-  if (number === 42) {
-    error42.style.display = "block";
-    resultOutput.style.display = "none";
+  if (number > 50) {
+    largerThan50.style.display = "block";
     loading.style.display = "none";
+    inputNumber.style.borderColor = "#D9534F";
+    inputNumber.style.color = "#D9534F";
   } else {
     fetch(serverURL)
       .then(function (response) {
-        return response.json();
+        if (response.ok) {
+          return response.json();
+        } else if (response.status === 400) {
+          return response.text();
+        }
       })
       .then(function (data) {
+        if (!data.result) throw new Error(data);
         loading.style.display = "none";
-        document.getElementById("resultOutput").innerHTML = data.result;
+        resultOutput.innerHTML = data.result;
+        resultOutput.style.textDecoration = "underline";
+        resultOutput.style.fontWeight = "bold";
+        resultOutput.style.fontSize = "x-large";
+      })
+      .catch((error) => {
+        loading.style.display = "none";
+        resultOutput.innerHTML = "Server Error: " + error.message;
+        resultOutput.style.color = "#D9534F";
       });
   }
 }
