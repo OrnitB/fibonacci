@@ -59,7 +59,7 @@ function callFiboServer() {
         resultOutput.style.textDecoration = "underline";
         resultOutput.style.fontWeight = "bold";
         resultOutput.style.fontSize = "x-large";
-        fiboMemo(data);
+        getFiboResults();
       })
       .catch((error) => {
         loading.style.display = "none";
@@ -77,29 +77,36 @@ function onClickField() {
   inputNumber.value = "";
 }
 
-/* const createLi = document.createElement("li class=text-decoration-underline");
- */
 const listOfResults = document.getElementById("listOfResults");
 const loading2 = document.getElementById("loading2");
-let fiboMemo = function getFiboResults() {
+
+function getFiboResults() {
   let resultsURL = "http://localhost:5050/getFibonacciResults";
-  fetch(resultsURL).then(function (response) {
-    return response.json().then(function (data) {
+  fetch(resultsURL)
+    .then(function (response) {
+      return response.json();
+    })
+    .then(function (data) {
       let fullResults = data["results"];
+      listOfResults.innerHTML = "";
       for (let i = 0; i < fullResults.length; i++) {
         let singleResult = fullResults[i];
         let date = new Date(singleResult["createdDate"]);
         let inputNumber = singleResult["number"];
         let resultOutput = singleResult["result"];
         let fullSentence = `The fibonacci of <b>${inputNumber}</b> is <b>${resultOutput}</b>. Calculated at: ${date}`;
-        singleResult = fullSentence;
-        const element1 = `<li id="resultSentence">${fullSentence}</li><br>`;
-
+        const element1 = `<li class="resultSentence">${fullSentence}</li>`;
         listOfResults.innerHTML += element1;
       }
       loading2.style.display = "none";
     });
-  });
-};
+}
 
-window.addEventListener("load", fiboMemo);
+window.addEventListener("load", getFiboResults);
+
+function serverOrLocal() {
+  let checkBox = document.getElementById("save");
+  if (checkBox.checked) {
+    return "Hi";
+  }
+}

@@ -31,7 +31,7 @@ input[type="number"]::-webkit-outer-spin-button {
   margin-left: 10px;
 }
 
-#resultSentence {
+.resultSentence {
   display: inline-block;
   list-style: none;
   border-bottom: 1px solid #000;
