@@ -20,7 +20,10 @@ function fiboRecursion(x) {
     return y;
   }
 } */
+/* 
+const { result } = require("underscore");
 
+ */
 let largerThan50 = document.getElementById("largerThan50");
 largerThan50.style.display = "none";
 let loading = document.getElementById("loading");
@@ -56,6 +59,7 @@ function callFiboServer() {
         resultOutput.style.textDecoration = "underline";
         resultOutput.style.fontWeight = "bold";
         resultOutput.style.fontSize = "x-large";
+        fiboMemo(data);
       })
       .catch((error) => {
         loading.style.display = "none";
@@ -64,3 +68,38 @@ function callFiboServer() {
       });
   }
 }
+
+function onClickField() {
+  inputNumber.style.color = "#000";
+  inputNumber.style.borderColor = "#CCCCCC";
+  largerThan50.style.display = "none";
+  resultOutput.innerHTML = "";
+  inputNumber.value = "";
+}
+
+/* const createLi = document.createElement("li class=text-decoration-underline");
+ */
+const listOfResults = document.getElementById("listOfResults");
+const loading2 = document.getElementById("loading2");
+let fiboMemo = function getFiboResults() {
+  let resultsURL = "http://localhost:5050/getFibonacciResults";
+  fetch(resultsURL).then(function (response) {
+    return response.json().then(function (data) {
+      let fullResults = data["results"];
+      for (let i = 0; i < fullResults.length; i++) {
+        let singleResult = fullResults[i];
+        let date = new Date(singleResult["createdDate"]);
+        let inputNumber = singleResult["number"];
+        let resultOutput = singleResult["result"];
+        let fullSentence = `The fibonacci of <b>${inputNumber}</b> is <b>${resultOutput}</b>. Calculated at: ${date}`;
+        singleResult = fullSentence;
+        const element1 = `<li id="resultSentence">${fullSentence}</li><br>`;
+
+        listOfResults.innerHTML += element1;
+      }
+      loading2.style.display = "none";
+    });
+  });
+};
+
+window.addEventListener("load", fiboMemo);

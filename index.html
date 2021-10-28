@@ -27,6 +27,7 @@
         id="inputNumber"
         placeholder="#"
         style="width: 7%"
+        onclick="onClickField()"
       />
       <button id="is" type="button" class="btn btn-primary">Is</button>
       <div id="loading" class="spinner-border" role="status">
@@ -37,6 +38,17 @@
     <div id="largerThan50" class="alert alert-danger" role="alert">
       Can't be larger than 50
     </div>
+    <div>
+      <input type="checkbox" id="save" name="save" />
+      <label for="save">Save Calculation</label>
+    </div>
+    <div id="resultHeadline" class="w-25">
+      <div id="resultHeadline-child">
+        <h3 class="fw-normal">Results</h3>
+        <div id="loading2" class="spinner-border" role="status"></div>
+      </div>
+    </div>
+    <div id="listOfResults"></div>
     <script src="./index.js"></script>
   </body>
 </html>
