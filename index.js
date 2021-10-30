@@ -99,6 +99,7 @@ function callFiboServer() {
         resultOutput.style.color = "#D9534F";
         resultOutput.style.textDecoration = "none";
         resultOutput.style.fontSize = "medium";
+        resultOutput.style.fontWeight = "normal";
       });
   }
 }
@@ -117,8 +118,8 @@ function getFiboResults() {
         let date = new Date(singleResult["createdDate"]);
         let inputNumber = singleResult["number"];
         let resultOutput = singleResult["result"];
-        let fullSentence = `The fibonacci of <b>${inputNumber}</b> is <b>${resultOutput}</b>. Calculated at: ${date}`;
-        const element = `<li class="resultSentence">${fullSentence}</li>`;
+        let fullSentence = `The Fibonacci Of <b>${inputNumber}</b> is <b>${resultOutput}</b>. Calculated at: ${date}`;
+        const element = `<li class="resultSentence h4 fw-normal">${fullSentence}</li>`;
         listOfResults.innerHTML += element;
       }
       loading2.style.display = "none";
